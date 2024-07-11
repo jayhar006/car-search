@@ -12,18 +12,18 @@
 
 <div align="center">
     <h1>Car Search</h1>
-    <form form action="#" th:action="@{/cars}" method="post" th:object="${search}">
+    <form form th:action="@{/cars/search}" method="get">
         <label>Length:</label>
-        <input type="text" th:field="*{length}" />
+        <input type="text" th:name="length" />
 
         <label>Weight:</label>
-        <input type="text" th:field="*{weight}" />
+        <input type="text" th:name="weight" />
 
         <label>Velocity:</label>
-        <input type="text" th:field="*{velocity}" />
+        <input type="text" th:name="velocity" />
 
         <label>Color:</label>
-        <input type="text" th:field="*{color}" />
+        <input type="text" th:name="color" />
 
         <button type="submit">Search</button>
     </form>

@@ -1,6 +1,7 @@
 package com.car.search.repository;
 
 import com.car.search.entity.Car;
+import com.car.search.entity.SearchQueryParameters;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
@@ -15,7 +16,7 @@ public class CarRepositoryCustomImpl implements CarRepositoryCustom {
 
 
     @Override
-    public List<Car> findCarByLengthWeightVelocityColor(int length, int weight, int velocity, String color) {
+    public List<Car> findCarByLengthWeightVelocityColor(SearchQueryParameters searchQueryParameters) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Car> query = cb.createQuery(Car.class);
         Root<Car> car = query.from(Car.class);
@@ -26,16 +27,19 @@ public class CarRepositoryCustomImpl implements CarRepositoryCustom {
         Path<String> colorPath = car.get("color");
 
         List<Predicate> predicates = new ArrayList<>();
-        if (length != 0)
-            predicates.add(cb.equal(lengthPath, String.valueOf(length)));
-        if (weight != 0)
-            predicates.add(cb.equal(weightPath, String.valueOf(weight)));
-        if (velocity != 0)
-            predicates.add(cb.equal(velocityPath, String.valueOf(velocity)));
-        if (color!= null && !color.isEmpty())
-            predicates.add(cb.like(colorPath, color));
+        if (searchQueryParameters.getLength() != 0)
+            predicates.add(cb.equal(lengthPath, String.valueOf(searchQueryParameters.getLength())));
+        if (searchQueryParameters.getWeight() != 0)
+            predicates.add(cb.equal(weightPath, String.valueOf(searchQueryParameters.getWeight())));
+        if (searchQueryParameters.getVelocity() != 0)
+            predicates.add(cb.equal(velocityPath, String.valueOf(searchQueryParameters.getVelocity())));
+        if (searchQueryParameters.getColor()!= null && !searchQueryParameters.getColor().isEmpty())
+            predicates.add(cb.like(colorPath, searchQueryParameters.getColor()));
+
+        Predicate [] predicatesArray = new Predicate[predicates.size()];
+
         query.select(car)
-                .where(cb.or(predicates.toArray(new Predicate[predicates.size()])));
+                .where(cb.or(predicates.toArray(predicatesArray)));
 
         return entityManager.createQuery(query)
                 .getResultList();

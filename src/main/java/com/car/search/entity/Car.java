@@ -10,14 +10,19 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    public int id;
-    public int length;
-    public int weight;
-    public int velocity;
-    public String color;
+    private int id;
+    private int length;
+    private int weight;
+    private int velocity;
+    private String color;
 
 
-    public Car() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getLength() {
@@ -50,5 +55,16 @@ public class Car {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", length=" + length +
+                ", weight=" + weight +
+                ", velocity=" + velocity +
+                ", color='" + color + '\'' +
+                '}';
     }
 }

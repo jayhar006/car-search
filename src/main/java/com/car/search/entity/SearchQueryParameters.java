@@ -11,6 +11,7 @@ public class SearchQueryParameters {
     public String color;
 
 
+
     public int getLength() {
         return length;
     }
@@ -41,5 +42,52 @@ public class SearchQueryParameters {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public static final class Builder {
+        private int length;
+        private int weight;
+        private int velocity;
+        private String color;
+
+        private Builder() {
+        }
+
+        public static Builder aSearchQueryParameters() {
+            return new Builder();
+        }
+
+        public static SearchQueryParameters buildEmpty() {
+            return aSearchQueryParameters().build();
+        }
+
+        public Builder withLength(int length) {
+            this.length = length;
+            return this;
+        }
+
+        public Builder withWeight(int weight) {
+            this.weight = weight;
+            return this;
+        }
+
+        public Builder withVelocity(int velocity) {
+            this.velocity = velocity;
+            return this;
+        }
+
+        public Builder withColor(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public SearchQueryParameters build() {
+            SearchQueryParameters searchQueryParameters = new SearchQueryParameters();
+            searchQueryParameters.setLength(length);
+            searchQueryParameters.setWeight(weight);
+            searchQueryParameters.setVelocity(velocity);
+            searchQueryParameters.setColor(color);
+            return searchQueryParameters;
+        }
     }
 }
