@@ -32,9 +32,8 @@ public class CarRepositoryCustomImpl implements CarRepositoryCustom {
             predicates.add(cb.equal(weightPath, String.valueOf(weight)));
         if (velocity != 0)
             predicates.add(cb.equal(velocityPath, String.valueOf(velocity)));
-        if (!color.isEmpty())
+        if (color!= null && !color.isEmpty())
             predicates.add(cb.like(colorPath, color));
-
         query.select(car)
                 .where(cb.or(predicates.toArray(new Predicate[predicates.size()])));
 
